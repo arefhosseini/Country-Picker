@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,9 +40,10 @@ import com.arpitkatiyarprojects.countrypicker.utils.FunctionHelper
  * @param defaultPaddingValues The The [PaddingValues] to apply internally between the container and the content.
  * @param selectedCountryDisplayProperties The [SelectedCountryDisplayProperties] properties related to the selected country display, including flag dimensions and text styles.
  * @param countriesListDialogDisplayProperties The [CountriesListDialogDisplayProperties] properties related to the country selection dialog, including flag dimensions and text styles.
- * @param defaultCountryCode  Specifies the default country code to be pre-selected in the picker. The code must adhere to the 2-letter ISO standard. For example, "in" represents India. If not explicitly provided, the picker will automatically detect the user's country.
+ * @param defaultCountryCode Specifies the default country code to be pre-selected in the picker. The code must adhere to the 2-letter ISO standard. For example, "in" represents India. If not explicitly provided, the picker will automatically detect the user's country.
  * @param countriesList Specifies a list of countries to populate in the picker. If not provided, the picker will use a predefined list of countries. It's essential that the provided countries list strictly adheres to the standard 2-letter ISO code format for each country.
  * @param countryListDisplayType The type of UI to use for displaying the list (BottomSheet or Dialog).
+ * @param openCountrySelectionList If it is true, the country selection list will be displayed.
  * @param onCountrySelected The callback function is triggered each time a country is selected within the picker. Additionally, it is also invoked when the picker is first displayed on the screen with the default selected country.
  */
 @Composable
@@ -53,10 +55,10 @@ fun CountryPicker(
     defaultCountryCode: String? = null,
     countriesList: List<String>? = null,
     countryListDisplayType: CountryListDisplayType = CountryListDisplayType.Dialog,
-    onCountrySelected: (country: CountryDetails) -> Unit
+    openCountrySelectionList: MutableState<Boolean> = mutableStateOf(false),
+    onCountrySelected: ((country: CountryDetails) -> Unit)? = null,
 ) {
     val context = LocalContext.current
-    var openCountrySelectionList by remember { mutableStateOf(false) }
     val applicableCountriesList = remember {
         val allCountriesList = FunctionHelper.getAllCountries(context)
         if (countriesList.isNullOrEmpty()) {
@@ -73,22 +75,22 @@ fun CountryPicker(
                 defaultCountryCode?.lowercase(),
                 applicableCountriesList
             ).also {
-                onCountrySelected(it)
+                onCountrySelected?.invoke(it)
             }
         )
     }
-    if (openCountrySelectionList) {
+    if (openCountrySelectionList.value) {
         CountrySelectionList(
             countriesList = applicableCountriesList,
             countriesListDialogDisplayProperties = countriesListDialogDisplayProperties,
             countryListDisplayType = countryListDisplayType,
             onDismissRequest = {
-                openCountrySelectionList = false
+                openCountrySelectionList.value = false
             },
             onSelected = { country ->
                 selectedCountry = country
-                openCountrySelectionList = false
-                onCountrySelected(country)
+                openCountrySelectionList.value = false
+                onCountrySelected?.invoke(country)
             },
         )
     }
@@ -96,9 +98,9 @@ fun CountryPicker(
         defaultPaddingValues = defaultPaddingValues,
         selectedCountry = selectedCountry,
         selectedCountryDisplayProperties = selectedCountryDisplayProperties,
-        modifier = modifier
+        modifier = modifier,
     ) {
-        openCountrySelectionList = !openCountrySelectionList
+        openCountrySelectionList.value = !openCountrySelectionList.value
     }
 }
 
@@ -122,9 +124,9 @@ private fun SelectedCountrySection(
 ) {
     Row(
         modifier = modifier
-            .clickable {
-                onSelectCountry()
-            }
+            .then(
+                if (!selectedCountryDisplayProperties.readOnly) Modifier.clickable { onSelectCountry() } else Modifier
+            )
             .padding(defaultPaddingValues),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -161,12 +163,14 @@ private fun SelectedCountrySection(
                     text = selectedCountry.countryCode.uppercase(),
                     style = textStyles.countryCodeTextStyle
                 )
-                Spacer(modifier = Modifier.width(properties.spaceAfterCountryCode))
             }
-            Icon(
-                imageVector = Icons.Default.ArrowDropDown,
-                contentDescription = stringResource(R.string.select_country_dropdown)
-            )
+            if (properties.showArrow) {
+                Spacer(modifier = Modifier.width(properties.spaceAfterCountryCode))
+                Icon(
+                    imageVector = Icons.Default.ArrowDropDown,
+                    contentDescription = stringResource(R.string.select_country_dropdown)
+                )
+            }
         }
     }
 }

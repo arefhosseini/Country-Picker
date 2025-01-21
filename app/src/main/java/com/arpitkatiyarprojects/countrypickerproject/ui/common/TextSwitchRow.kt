@@ -12,11 +12,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun TextSwitchRow(text: String, isSwitchEnabled: Boolean, onSwitchStateChanged: (Boolean) -> Unit) {
+fun TextSwitchRow(
+    modifier: Modifier = Modifier,
+    text: String,
+    isSwitchEnabled: Boolean,
+    onSwitchStateChanged: (Boolean) -> Unit
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
         Text(text = text, fontWeight = FontWeight.Bold, fontSize = 14.sp)
         Switch(checked = isSwitchEnabled,

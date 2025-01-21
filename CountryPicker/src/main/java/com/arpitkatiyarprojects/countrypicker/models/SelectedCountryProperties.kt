@@ -7,6 +7,7 @@ import androidx.compose.ui.unit.dp
  * Configuration class for selected country.
  * @param showCountryFlag Specifies whether to display the country flag for selected country.
  * @param showCountryPhoneCode Specifies whether to display the country phone code for selected country.
+ * @param showArrow Specifies whether to display the arrow icon for selected country.
  * @param showCountryName Specifies whether to display the country name for selected country.
  * @param showCountryCode Specifies whether to display the country code for selected country.
  * @param spaceAfterCountryFlag Defines the spacing after the country flag, iff showCountryFlag = true , represented as [Dp].
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.dp
 data class SelectedCountryProperties(
     val showCountryFlag: Boolean = true,
     val showCountryPhoneCode: Boolean = true,
+    val showArrow: Boolean = true,
     val showCountryName: Boolean = false,
     val showCountryCode: Boolean = false,
     val spaceAfterCountryFlag: Dp = 8.dp,
