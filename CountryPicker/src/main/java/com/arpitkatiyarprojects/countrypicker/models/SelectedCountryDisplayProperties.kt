@@ -1,5 +1,6 @@
 package com.arpitkatiyarprojects.countrypicker.models
 
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
  *   country code, country name, and phone code.
  * @param flagShape Shape of the country flag (e.g., rectangle , rounded etc).
  * @param readOnly Specifies the component is clickable or not.
+ * @param arrowIcon A custom composable function to display an arrow icon.
  */
 data class SelectedCountryDisplayProperties(
     val properties: SelectedCountryProperties = SelectedCountryProperties(),
@@ -25,4 +27,5 @@ data class SelectedCountryDisplayProperties(
     val textStyles: SelectedCountryTextStyles = SelectedCountryTextStyles(),
     val flagShape: Shape = RectangleShape,
     val readOnly: Boolean = false,
+    val arrowIcon: (@Composable () -> Unit)? = null
 )

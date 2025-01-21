@@ -166,7 +166,7 @@ private fun SelectedCountrySection(
             }
             if (properties.showArrow) {
                 Spacer(modifier = Modifier.width(properties.spaceAfterCountryCode))
-                Icon(
+                arrowIcon?.invoke() ?: Icon(
                     imageVector = Icons.Default.ArrowDropDown,
                     contentDescription = stringResource(R.string.select_country_dropdown)
                 )
