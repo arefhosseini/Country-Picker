@@ -1,5 +1,7 @@
 package com.arpitkatiyarprojects.countrypicker.utils
 
+import android.content.Context
+import com.arpitkatiyarprojects.countrypicker.models.CountryDetails
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.google.i18n.phonenumbers.Phonenumber
 
@@ -93,4 +95,35 @@ object CountryPickerUtils {
         }
     }
 
+
+    /**
+     * Find Country Details by Country Code
+     * @param context The Context
+     * @param countryCode The ISO 3166-1 alpha-2 country code (e.g., "IR" for Iran).
+     * @return A CountryDetails object if found, null otherwise.
+     */
+    fun getCountryDetailsByCountryCode(context: Context, countryCode: String): CountryDetails? {
+        return FunctionHelper.getAllCountries(context).firstOrNull {
+            it.countryCode == countryCode
+        }
+    }
+
+    /**
+     * Find Country Details by Country Code
+     * @param context The Context
+     * @param countryPhoneNumberCode The country phone code (e.g., "+98" for Iran).
+     * @return A CountryDetails object if found, null otherwise.
+     */
+    fun getCountryDetailsByCountryPhoneCode(context: Context, countryPhoneNumberCode: String): CountryDetails? {
+        val validPhoneNumberCode = if (countryPhoneNumberCode.startsWith("+")) {
+            countryPhoneNumberCode
+        } else if (countryPhoneNumberCode.startsWith("00")) {
+            countryPhoneNumberCode.replaceFirst("00", "+")
+        } else {
+            "+$countryPhoneNumberCode"
+        }
+        return FunctionHelper.getAllCountries(context).firstOrNull {
+            it.countryPhoneNumberCode == validPhoneNumberCode
+        }
+    }
 }
