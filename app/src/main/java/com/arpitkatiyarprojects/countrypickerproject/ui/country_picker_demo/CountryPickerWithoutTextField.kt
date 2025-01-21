@@ -1,9 +1,6 @@
 package com.arpitkatiyarprojects.countrypickerproject.ui.country_picker_demo
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.Interaction
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,10 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -38,7 +33,6 @@ import com.arpitkatiyarprojects.countrypickerproject.ui.common.SpacerHeight16
 import com.arpitkatiyarprojects.countrypickerproject.ui.common.SpacerHeight8
 import com.arpitkatiyarprojects.countrypickerproject.ui.common.TextSwitchRow
 import com.arpitkatiyarprojects.countrypickerproject.ui.common.TitleSettingsComposable
-import kotlinx.coroutines.launch
 
 @Composable
 fun CountryPickerWithoutTextField() {

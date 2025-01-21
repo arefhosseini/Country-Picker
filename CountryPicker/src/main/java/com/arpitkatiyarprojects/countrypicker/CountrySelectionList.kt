@@ -245,7 +245,7 @@ private fun CountriesListTopBarSection(
                         },
                         placeholder = {
                             Text(
-                                text = stringResource(R.string.search_country),
+                                text = countriesListDialogDisplayProperties.properties.searchHintText?.takeIf { it.isNotBlank() } ?: stringResource(R.string.search_country),
                                 color = MaterialTheme.colorScheme.onSurface,
                                 style = textStyles.searchBarHintTextStyle ?: LocalTextStyle.current
                             )
@@ -263,7 +263,7 @@ private fun CountriesListTopBarSection(
                 } else {
                     Text(
                         modifier = Modifier.offset(y = (-2).dp),
-                        text = stringResource(R.string.select_country),
+                        text = countriesListDialogDisplayProperties.properties.headerText?.takeIf { it.isNotBlank() } ?: stringResource(R.string.select_country),
                         style = textStyles.titleTextStyle ?: MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
@@ -317,7 +317,7 @@ private fun CountriesListSection(
             if (countriesList.isEmpty()) {
                 item {
                     Text(
-                        text = stringResource(R.string.no_country_found),
+                        text = countriesListDialogDisplayProperties.properties.noResultText?.takeIf { it.isNotBlank() } ?: stringResource(R.string.no_country_found),
                         style = textStyles.noSearchedCountryAvailableTextStyle
                             ?: MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
@@ -388,12 +388,15 @@ private fun CountriesListItem(
                     }
                 })
             },
-            trailingContent = {
-                Text(
-                    text = countryItem.countryPhoneNumberCode,
-                    style = textStyles.countryPhoneCodeTextStyle
-                        ?: MaterialTheme.typography.bodyMedium,
-                )
-            })
+            trailingContent = if (properties.showCountryPhoneCode) {
+                {
+                    Text(
+                        text = countryItem.countryPhoneNumberCode,
+                        style = textStyles.countryPhoneCodeTextStyle
+                            ?: MaterialTheme.typography.bodyMedium,
+                    )
+                }
+            } else null
+        )
     }
 }

@@ -17,6 +17,13 @@ fun CountriesListDialogSettings(
                 onPropertiesChange(copy(flagDimensions = updatedDimensions))
             }
             TextSwitchRow(
+                text = "Show Country Phone Code",
+                isSwitchEnabled = properties.showCountryPhoneCode
+            ) {
+                val updatedProperties = properties.copy(showCountryPhoneCode = it)
+                onPropertiesChange(copy(properties = updatedProperties))
+            }
+            TextSwitchRow(
                 text = "Show Country Code",
                 isSwitchEnabled = properties.showCountryCode
             ) {
