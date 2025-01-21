@@ -136,14 +136,14 @@ internal fun PickerOutlinedTextField(
                     interactionSource = interactionSource,
                     colors = colors,
                     container = {
-                        OutlinedTextFieldDefaults.ContainerBox(
-                            enabled,
-                            isError,
-                            interactionSource,
-                            colors,
-                            shape,
-                            borderThickness.focusedBorderThickness,
-                            borderThickness.unfocusedBorderThickness
+                        OutlinedTextFieldDefaults.Container(
+                            enabled = enabled,
+                            isError = isError,
+                            interactionSource = interactionSource,
+                            colors = colors,
+                            shape = shape,
+                            focusedBorderThickness = borderThickness.focusedBorderThickness,
+                            unfocusedBorderThickness = borderThickness.unfocusedBorderThickness
                         )
                     }
                 )
