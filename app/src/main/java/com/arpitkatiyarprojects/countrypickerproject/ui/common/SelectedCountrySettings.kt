@@ -17,24 +17,33 @@ fun SelectedCountrySettings(
                 onPropertiesChange(copy(flagDimensions = it))
             }
 
-            TextSwitchRow(text = "Show Country Flag", properties.showCountryFlag) {
+            TextSwitchRow(text = "Show Country Flag", isSwitchEnabled = properties.showCountryFlag) {
                 val updatedProperties = properties.copy(showCountryFlag = it)
                 onPropertiesChange(copy(properties = updatedProperties))
             }
 
-            TextSwitchRow(text = "Show Country Phone Code", properties.showCountryPhoneCode) {
+            TextSwitchRow(text = "Show Country Phone Code", isSwitchEnabled = properties.showCountryPhoneCode) {
                 val updatedProperties = properties.copy(showCountryPhoneCode = it)
                 onPropertiesChange(copy(properties = updatedProperties))
             }
 
-            TextSwitchRow(text = "Show Country Name", properties.showCountryName) {
+            TextSwitchRow(text = "Show Arrow", isSwitchEnabled = properties.showArrow) {
+                val updatedProperties = properties.copy(showArrow = it)
+                onPropertiesChange(copy(properties = updatedProperties))
+            }
+
+            TextSwitchRow(text = "Show Country Name", isSwitchEnabled = properties.showCountryName) {
                 val updatedProperties = properties.copy(showCountryName = it)
                 onPropertiesChange(copy(properties = updatedProperties))
             }
 
-            TextSwitchRow(text = "Show Country Code", properties.showCountryCode) {
+            TextSwitchRow(text = "Show Country Code", isSwitchEnabled = properties.showCountryCode) {
                 val updatedProperties = properties.copy(showCountryCode = it)
                 onPropertiesChange(copy(properties = updatedProperties))
+            }
+
+            TextSwitchRow(text = "Read Only", isSwitchEnabled = readOnly) {
+                onPropertiesChange(copy(readOnly = it))
             }
 
             TextProgressRow(

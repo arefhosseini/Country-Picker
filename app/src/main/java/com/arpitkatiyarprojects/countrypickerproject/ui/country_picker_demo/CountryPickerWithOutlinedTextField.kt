@@ -126,7 +126,7 @@ fun CountryPickerWithOutlinedText() {
 
                     TextSwitchRow(
                         text = "Format Example Mobile Number",
-                        formatExampleMobileNumber
+                        isSwitchEnabled = formatExampleMobileNumber
                     ) {
                         formatExampleMobileNumber = it
                     }

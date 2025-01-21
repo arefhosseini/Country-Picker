@@ -17,10 +17,12 @@ import androidx.compose.ui.unit.dp
  *   represented by [SelectedCountryTextStyles]. This includes the text styles for
  *   country code, country name, and phone code.
  * @param flagShape Shape of the country flag (e.g., rectangle , rounded etc).
+ * @param readOnly Specifies the component is clickable or not.
  */
 data class SelectedCountryDisplayProperties(
     val properties: SelectedCountryProperties = SelectedCountryProperties(),
     val flagDimensions: FlagDimensions = FlagDimensions(width = 28.dp, height = 18.dp),
     val textStyles: SelectedCountryTextStyles = SelectedCountryTextStyles(),
-    val flagShape: Shape = RectangleShape
+    val flagShape: Shape = RectangleShape,
+    val readOnly: Boolean = false,
 )
