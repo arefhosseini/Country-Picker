@@ -68,7 +68,7 @@ fun CountryPicker(
             allCountriesList.filter { it.countryCode in updatedCountriesList }
         }
     }
-    var selectedCountry by remember {
+    var selectedCountry by remember(defaultCountryCode) {
         mutableStateOf(
             FunctionHelper.getDefaultSelectedCountry(
                 context,
