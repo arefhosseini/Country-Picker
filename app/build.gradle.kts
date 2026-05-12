@@ -1,17 +1,17 @@
 plugins {
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.jetbrainsKotlinSerialization)
+    alias(libs.plugins.composeCompiler)
 }
 
 android {
     namespace = "com.arpitkatiyarprojects.countrypickerproject"
-    compileSdk = 35
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.arpitkatiyarprojects.countrypickerproject"
-        minSdk = 21
-        targetSdk = 35
+        minSdk = 23
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
 
@@ -34,14 +34,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
     buildFeatures {
         compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompilerVersion.get()
     }
     packaging {
         resources {
