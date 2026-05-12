@@ -37,6 +37,7 @@ import com.arpitkatiyarprojects.countrypicker.models.SelectedCountryDisplayPrope
  * @param countriesListDialogDisplayProperties The [CountriesListDialogDisplayProperties] properties related to the country selection dialog, including flag dimensions and text styles.
  * @param defaultCountryCode Specifies the default country code to be pre-selected in the picker. The code must adhere to the 2-letter ISO standard. For example, "in" represents India. If not explicitly provided, the picker will automatically detect the user's country.
  * @param countriesList specifies a list of countries to populate in the picker. If not provided, the picker will use a predefined list of countries. It's essential that the provided countries list strictly adheres to the standard 2-letter ISO code format for each country.
+ * @param restrictedCountriesList Specifies a list of countries to restrict in the picker.
  * @param enabled controls the enabled state of this text field. When false, this component will not respond to user input, and it will appear visually disabled and disabled to accessibility services.
  * @param readOnly controls the editable state of the text field. When true, the text field cannot be modified. However, a user can focus it and copy text from it. Read-only text fields are usually used to display pre-filled forms that a user cannot edit.
  * @param textStyle the [TextStyle] to be applied to the input text. Defaults to [LocalTextStyle].
@@ -70,6 +71,7 @@ fun CountryPickerOutlinedTextField(
     countriesListDialogDisplayProperties: CountriesListDialogDisplayProperties = CountriesListDialogDisplayProperties(),
     defaultCountryCode: String? = null,
     countriesList: List<String>? = null,
+    restrictedCountriesList: List<String>? = null,
     enabled: Boolean = true,
     readOnly: Boolean = false,
     textStyle: TextStyle = LocalTextStyle.current,
@@ -111,6 +113,7 @@ fun CountryPickerOutlinedTextField(
                 countriesListDialogDisplayProperties = countriesListDialogDisplayProperties,
                 defaultCountryCode = defaultCountryCode,
                 countriesList = countriesList,
+                restrictedCountriesList = restrictedCountriesList,
                 countryListDisplayType = countryListDisplayType,
                 openCountrySelectionList = openCountrySelectionList,
                 onCountrySelected = onCountrySelected
