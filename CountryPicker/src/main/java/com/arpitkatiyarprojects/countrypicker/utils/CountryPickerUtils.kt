@@ -104,7 +104,7 @@ object CountryPickerUtils {
      */
     fun getCountryDetailsByCountryCode(context: Context, countryCode: String): CountryDetails? {
         return FunctionHelper.getAllCountries(context).firstOrNull {
-            it.countryCode.trim().lowercase() == countryCode.trim().lowercase()
+            it.countryCode.trim().equals(countryCode.trim(), ignoreCase = true)
         }
     }
 
