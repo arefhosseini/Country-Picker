@@ -43,6 +43,7 @@ import com.arpitkatiyarprojects.countrypicker.utils.FunctionHelper
  * @param defaultCountryCode Specifies the default country code to be pre-selected in the picker. The code must adhere to the 2-letter ISO standard. For example, "in" represents India. If not explicitly provided, the picker will automatically detect the user's country.
  * @param countriesList Specifies a list of countries to populate in the picker. If not provided, the picker will use a predefined list of countries. It's essential that the provided countries list strictly adheres to the standard 2-letter ISO code format for each country.
  * @param restrictedCountriesList Specifies a list of countries to restrict in the picker.
+ * @param prioritizedCountriesList Specifies a list of country codes (2-letter ISO standard) to be placed at the top of the countries list. If the list is not empty, those countries will appear first and will be removed from their original position in the list to prevent duplication.
  * @param countryListDisplayType The type of UI to use for displaying the list (BottomSheet or Dialog).
  * @param openCountrySelectionList If it is true, the country selection list will be displayed.
  * @param onCountrySelected The callback function is triggered each time a country is selected within the picker. Additionally, it is also invoked when the picker is first displayed on the screen with the default selected country.
@@ -56,6 +57,7 @@ fun CountryPicker(
     defaultCountryCode: String? = null,
     countriesList: List<String>? = null,
     restrictedCountriesList: List<String>? = null,
+    prioritizedCountriesList: List<String> = emptyList(),
     countryListDisplayType: CountryListDisplayType = CountryListDisplayType.Dialog,
     openCountrySelectionList: MutableState<Boolean> = mutableStateOf(false),
     onCountrySelected: ((country: CountryDetails) -> Unit)? = null,
@@ -69,11 +71,21 @@ fun CountryPicker(
             val updatedRestrictedCountriesList = restrictedCountriesList.map { it.lowercase() }
             allCountriesList.filterNot { it.countryCode in updatedRestrictedCountriesList }
         }
-        if (countriesList.isNullOrEmpty()) {
+        val filteredCountriesList = if (countriesList.isNullOrEmpty()) {
             restrictedAllCountriesList
         } else {
             val updatedCountriesList = countriesList.map { it.lowercase() }
             restrictedAllCountriesList.filter { it.countryCode in updatedCountriesList }
+        }
+        if (prioritizedCountriesList.isEmpty()) {
+            filteredCountriesList
+        } else {
+            val updatedPrioritizedCountriesList = prioritizedCountriesList.map { it.lowercase() }
+            val prioritized = updatedPrioritizedCountriesList.mapNotNull { code ->
+                filteredCountriesList.find { it.countryCode == code }
+            }
+            val remaining = filteredCountriesList.filterNot { it.countryCode in updatedPrioritizedCountriesList }
+            prioritized + remaining
         }
     }
     var selectedCountry by remember(defaultCountryCode) {
