@@ -65,7 +65,7 @@ fun CountryPicker(
     onCountrySelected: ((country: CountryDetails) -> Unit)? = null,
 ) {
     val context = LocalContext.current
-    val applicableCountriesList = remember {
+    val applicableCountriesList = remember(countriesList, restrictedCountriesList, prioritizedCountriesList) {
         val allCountriesList = FunctionHelper.getAllCountries(context)
         val restrictedAllCountriesList = if (restrictedCountriesList.isNullOrEmpty()) {
             allCountriesList
