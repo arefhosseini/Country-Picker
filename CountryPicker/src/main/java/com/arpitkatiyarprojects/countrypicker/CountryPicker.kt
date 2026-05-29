@@ -40,12 +40,13 @@ import com.arpitkatiyarprojects.countrypicker.utils.FunctionHelper
  * @param defaultPaddingValues The [PaddingValues] to apply internally between the container and the content.
  * @param selectedCountryDisplayProperties The [SelectedCountryDisplayProperties] properties related to the selected country display, including flag dimensions and text styles.
  * @param countriesListDialogDisplayProperties The [CountriesListDialogDisplayProperties] properties related to the country selection dialog, including flag dimensions and text styles.
- * @param defaultCountryCode Specifies the default country code to be pre-selected in the picker. The code must adhere to the 2-letter ISO standard. For example, "in" represents India. If not explicitly provided, the picker will automatically detect the user's country.
+ * @param defaultCountryCode Specifies the default country code to be pre-selected in the picker. The code must adhere to the 2-letter ISO standard. For example, "in" represents India. If null, no country is pre-selected and [emptyContent] is shown instead.
  * @param countriesList Specifies a list of countries to populate in the picker. If not provided, the picker will use a predefined list of countries. It's essential that the provided countries list strictly adheres to the standard 2-letter ISO code format for each country.
  * @param restrictedCountriesList Specifies a list of countries to restrict in the picker.
  * @param prioritizedCountriesList Specifies a list of country codes (2-letter ISO standard) to be placed at the top of the countries list. If the list is not empty, those countries will appear first and will be removed from their original position in the list to prevent duplication.
  * @param countryListDisplayType The type of UI to use for displaying the list (BottomSheet or Dialog).
  * @param openCountrySelectionList If it is true, the country selection list will be displayed.
+ * @param emptyContent An optional composable displayed instead of the selected country section when [defaultCountryCode] is null and no country has been selected yet.
  * @param onCountrySelected The callback function is triggered each time a country is selected within the picker. Additionally, it is also invoked when the picker is first displayed on the screen with the default selected country.
  */
 @Composable
@@ -60,6 +61,7 @@ fun CountryPicker(
     prioritizedCountriesList: List<String> = emptyList(),
     countryListDisplayType: CountryListDisplayType = CountryListDisplayType.Dialog,
     openCountrySelectionList: MutableState<Boolean> = mutableStateOf(false),
+    emptyContent: @Composable (() -> Unit)? = null,
     onCountrySelected: ((country: CountryDetails) -> Unit)? = null,
 ) {
     val context = LocalContext.current
@@ -90,11 +92,15 @@ fun CountryPicker(
     }
     var selectedCountry by remember(defaultCountryCode) {
         mutableStateOf(
-            FunctionHelper.getDefaultSelectedCountry(
-                context,
-                defaultCountryCode?.lowercase(),
-                applicableCountriesList
-            )
+            if (defaultCountryCode != null) {
+                FunctionHelper.getDefaultSelectedCountry(
+                    context,
+                    defaultCountryCode.lowercase(),
+                    applicableCountriesList
+                )
+            } else {
+                null
+            }
         )
     }
     if (openCountrySelectionList.value) {
@@ -112,14 +118,16 @@ fun CountryPicker(
             },
         )
     }
-    SelectedCountrySection(
-        defaultPaddingValues = defaultPaddingValues,
-        selectedCountry = selectedCountry,
-        selectedCountryDisplayProperties = selectedCountryDisplayProperties,
-        modifier = modifier,
-    ) {
-        openCountrySelectionList.value = !openCountrySelectionList.value
-    }
+    selectedCountry?.let {
+        SelectedCountrySection(
+            defaultPaddingValues = defaultPaddingValues,
+            selectedCountry = it,
+            selectedCountryDisplayProperties = selectedCountryDisplayProperties,
+            modifier = modifier,
+        ) {
+            openCountrySelectionList.value = !openCountrySelectionList.value
+        }
+    } ?: emptyContent?.invoke()
 }
 
 

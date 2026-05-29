@@ -35,7 +35,7 @@ import com.arpitkatiyarprojects.countrypicker.models.SelectedCountryDisplayPrope
  * @param defaultPaddingValues The [PaddingValues] to apply internally between the container and the content.
  * @param selectedCountryDisplayProperties The [SelectedCountryDisplayProperties] properties related to the selected country display, including flag dimensions and text styles.
  * @param countriesListDialogDisplayProperties The [CountriesListDialogDisplayProperties] properties related to the country selection dialog, including flag dimensions and text styles.
- * @param defaultCountryCode Specifies the default country code to be pre-selected in the picker. The code must adhere to the 2-letter ISO standard. For example, "in" represents India. If not explicitly provided, the picker will automatically detect the user's country.
+ * @param defaultCountryCode Specifies the default country code to be pre-selected in the picker. The code must adhere to the 2-letter ISO standard. For example, "in" represents India. If null, no country is pre-selected and [emptyContent] is shown instead.
  * @param countriesList specifies a list of countries to populate in the picker. If not provided, the picker will use a predefined list of countries. It's essential that the provided countries list strictly adheres to the standard 2-letter ISO code format for each country.
  * @param restrictedCountriesList Specifies a list of countries to restrict in the picker.
  * @param prioritizedCountriesList Specifies a list of country codes (2-letter ISO standard) to be placed at the top of the countries list. If the list is not empty, those countries will appear first and will be removed from their original position in the list to prevent duplication.
@@ -59,6 +59,7 @@ import com.arpitkatiyarprojects.countrypicker.models.SelectedCountryDisplayPrope
  * @param borderThickness Represents the border thickness for focused and unfocused states.
  * @param openCountrySelectionList If it is true, the country selection list will be displayed.
  * @param countryListDisplayType The type of UI to use for displaying the list (BottomSheet or Dialog).
+ * @param emptyContent An optional composable displayed instead of the selected country section when [defaultCountryCode] is null and no country has been selected yet.
  * @param onDone The callback is triggered when the user clicks the Done button on the keyboard, as the default IME action is set to Done.
  */
 @Composable
@@ -94,6 +95,7 @@ fun CountryPickerOutlinedTextField(
     borderThickness: BorderThickness = BorderThickness(),
     countryListDisplayType: CountryListDisplayType = CountryListDisplayType.Dialog,
     openCountrySelectionList: MutableState<Boolean> = mutableStateOf(false),
+    emptyContent: @Composable (() -> Unit)? = null,
     onDone: (() -> Unit)? = null,
 ) {
     PickerOutlinedTextField(
@@ -119,6 +121,7 @@ fun CountryPickerOutlinedTextField(
                 prioritizedCountriesList = prioritizedCountriesList,
                 countryListDisplayType = countryListDisplayType,
                 openCountrySelectionList = openCountrySelectionList,
+                emptyContent = emptyContent,
                 onCountrySelected = onCountrySelected
             )
         },
