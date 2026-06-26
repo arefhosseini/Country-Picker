@@ -166,7 +166,7 @@ private fun SelectedCountrySection(
                         .clip(flagShape),
                     painter = painterResource(selectedCountry.countryFlag),
                     contentScale = ContentScale.Crop,
-                    contentDescription = selectedCountry.countryName
+                    contentDescription = null,
                 )
                 Spacer(modifier = Modifier.width(properties.spaceAfterCountryFlag))
             }
