@@ -72,6 +72,7 @@ fun CountryPickerWithOutlinedText() {
                 .verticalScroll(rememberScrollState())
         ) {
             CountryPickerOutlinedTextField(
+                defaultCountryCode = "US",
                 isError = isMobileNumberValidationError,
                 supportingText = if (isMobileNumberValidationError || enteredMobileNumber.isNotBlank()) {
                     {

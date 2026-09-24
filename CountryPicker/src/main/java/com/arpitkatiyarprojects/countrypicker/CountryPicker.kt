@@ -26,6 +26,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.arpitkatiyarprojects.countrypicker.enums.CountryListDisplayType
 import com.arpitkatiyarprojects.countrypicker.models.CountriesListDialogDisplayProperties
@@ -179,8 +180,11 @@ private fun SelectedCountrySection(
             }
             if (properties.showCountryName) {
                 Text(
+                    modifier = Modifier.weight(1f, fill = false),
                     text = selectedCountry.countryName,
-                    style = textStyles.countryNameTextStyle
+                    style = textStyles.countryNameTextStyle,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
                 Spacer(modifier = Modifier.width(properties.spaceAfterCountryName))
             }
