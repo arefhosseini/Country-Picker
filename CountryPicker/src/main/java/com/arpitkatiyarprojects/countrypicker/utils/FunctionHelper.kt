@@ -706,7 +706,7 @@ internal object FunctionHelper {
         CountryDetails(
             "ir",
             "+98",
-            context.getString(R.string.iran_islamic_republic_of),
+            context.getString(R.string.iran),
             R.drawable.ir
         ),
         CountryDetails(
